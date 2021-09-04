@@ -9,16 +9,12 @@ jobs:
   install:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/project
       - checkout
       - run: npm i
 
   test-cov:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/project
       - run: npm run test:cover
       - run:
          name: report coverage stats for non-PRs
@@ -30,8 +26,6 @@ jobs:
   build:
     <<: *defaults
     steps:
-    - attach_workspace:
-        at: ~/project
     - run: npm run build
 
 workflows:
