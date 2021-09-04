@@ -16,12 +16,6 @@ jobs:
     <<: *defaults
     steps:
       - run: npm run test:cover
-      - run:
-         name: report coverage stats for non-PRs
-         command: |
-           if [[ -z $CI_PULL_REQUEST ]]; then
-             ./node_modules/.bin/codecov
-           fi
 
   build:
     <<: *defaults

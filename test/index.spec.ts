@@ -4,8 +4,16 @@ import plugin from '../dist/esm/index'
 
 pluginTester({
 	plugin: plugin,
-	fixtures: path.join(__dirname, '__fixtures__'),
-	endOfLine: 'lf'
+	// fixtures: path.join(__dirname, '__fixtures__'),
+	// endOfLine: 'lf'
+	tests: {
+		props: {
+			only: true,
+			title: 'props -> defineProps',
+			fixture: path.resolve(__dirname, './__fixtures__/props/code.js'),
+			snapshot: true
+		}
+	}
 })
 
 	// {
