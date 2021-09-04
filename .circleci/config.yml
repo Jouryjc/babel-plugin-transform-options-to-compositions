@@ -6,6 +6,14 @@ defaults: &defaults
     - image: circleci/node:14
 
 jobs:
+  install:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - checkout
+      - run: npm i
+
   test-cov:
     <<: *defaults
     steps:
@@ -18,9 +26,24 @@ jobs:
            if [[ -z $CI_PULL_REQUEST ]]; then
              ./node_modules/.bin/codecov
            fi
+
   build:
     <<: *defaults
     steps:
-    - checkout
-    - run: npm i
+    - attach_workspace:
+        at: ~/project
     - run: npm run build
+
+workflows:
+  version: 2
+  install-and-parallel-test:
+    jobs:
+      - install
+      - test-cov:
+          requires:
+            - install
+      - build:
+          requires:
+            - install
+            - test-cov
+
