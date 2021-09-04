@@ -1,7 +1,7 @@
 version: 2
 
 defaults: &defaults
-  working_directory: ~/project/vue
+  working_directory: ~/repository
   docker:
     - image: circleci/node:14
 
@@ -20,7 +20,6 @@ jobs:
            fi
   build:
     <<: *defaults
-    working_directory: ~/repository
     steps:
     - checkout
     - run: npm i
