@@ -11,15 +11,21 @@ jobs:
     steps:
       - checkout
       - run: npm i
+      - persist_to_workspace:
+          root: ~/project
 
   test-cov:
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/project
       - run: npm run test:cover
 
   build:
     <<: *defaults
     steps:
+    - attach_workspace:
+        at: ~/project
     - run: npm run build
 
 workflows:
