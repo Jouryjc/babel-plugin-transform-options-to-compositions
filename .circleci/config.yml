@@ -1,4 +1,10 @@
 version: 2
+
+defaults: &defaults
+  working_directory: ~/project/vue
+  docker:
+    - image: circleci/node:14
+
 jobs:
   test-cov:
     <<: *defaults
@@ -13,8 +19,7 @@ jobs:
              ./node_modules/.bin/codecov
            fi
   build:
-    docker:
-    - image: circleci/node:14
+    <<: *defaults
     working_directory: ~/repository
     steps:
     - checkout
