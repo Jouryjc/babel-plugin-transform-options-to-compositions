@@ -1,0 +1,45 @@
+{
+  "name": "babel-plugin-transform-options-to-composition",
+  "version": "1.0.0",
+  "description": "一个 options api 到 composition api 的插件",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "type": "module",
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "tsup lib/index.ts",
+    "test": "npx jest",
+    "test:watch": "npx jest --watch",
+    "dev": "tsup --watch lib/index.ts",
+    "demo": "node ./example/index.js"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jouryjc/babel-plugin-transform-options-to-compositions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jouryjc/babel-plugin-transform-options-to-compositions/issues"
+  },
+  "homepage": "https://github.com/Jouryjc/babel-plugin-transform-options-to-compositions#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/helper-plugin-test-runner": "^7.14.5",
+    "@babel/helper-plugin-utils": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "babel-plugin-tester": "^10.1.0",
+    "husky": "^7.0.2",
+    "jest": "^27.1.0",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2",
+    "tsup": "^4.14.0"
+  }
+}
