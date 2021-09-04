@@ -2,10 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-    - image: circleci/node:8
+    - image: circleci/node:14
     working_directory: ~/repository
     steps:
     - checkout
-    - run: yarn
-    - run: yarn lint
-    - run: yarn test
+    - run: npm i
+    - run: npm run build
