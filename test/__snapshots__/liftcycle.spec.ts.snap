@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lifecycle lifecycle: beforeUnmount 1`] = `
+"\\"use strict\\";
+
+onBeforeUnmount(() => {
+  console.log('before unmount!');
+});"
+`;

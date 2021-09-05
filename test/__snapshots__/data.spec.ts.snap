@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`data -> reactive data -> reactive: data 1`] = `
+"\\"use strict\\";
+
+const state = reactive({
+  lastName: 'Tom'
+});"
+`;

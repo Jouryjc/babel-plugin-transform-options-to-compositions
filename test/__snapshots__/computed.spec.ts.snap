@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`computed -> computed computed: computed 1`] = `
+"\\"use strict\\";
+
+const name = computed(function name() {
+  return this.firstName + this.lastName;
+});
+const secondName = computed({
+  get: function get() {
+    return this.lastName + this.firstName;
+  }
+});"
+`;

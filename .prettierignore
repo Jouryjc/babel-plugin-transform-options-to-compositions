@@ -4,3 +4,4 @@ dist
 coverage
 .prettierignore
 .gitignore
+test/__snapshots__

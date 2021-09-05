@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`props -> defineProps defineProps: props 1`] = `
+"\\"use strict\\";
+
+const props = defineProps({
+  foo: {
+    type: String,
+    \\"default\\": 'foo'
+  },
+  bar: Number
+});"
+`;

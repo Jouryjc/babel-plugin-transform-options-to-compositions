@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`watch -> watch watch: watch 1`] = `
+"\\"use strict\\";
+
+watch('name', (cur, prev) => {
+  console.log(cur, prev);
+}, {
+  deep: true;
+});"
+`;
