@@ -8,6 +8,10 @@
     "example": "example",
     "lib": "lib"
   },
+  "files": [
+    "dist",
+    "example"
+  ],
   "scripts": {
     "build": "tsup lib/index.ts",
     "test": "npx jest",
