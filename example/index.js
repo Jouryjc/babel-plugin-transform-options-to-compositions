@@ -1,10 +1,7 @@
-import { transformSync } from '@babel/core'
-import plugin from '@babel/plugin-transform-options-to-composition'
+import { parseSync, transformFromAstSync } from '@babel/core'
+import plugin from '../dist/esm/index.js'
 
-const code2 = transformSync(
-  `
-import HelloWorld from './components/HelloWorld.vue'
-
+const sourceCode = `
 export default {
   name: 'App',
 
@@ -57,10 +54,14 @@ export default {
     console.log('before unmount!')
   }
   
-}`,
-  {
-    plugins: [plugin],
-  }
-).code
+}`
 
-console.log(code2)
+const ast = parseSync(sourceCode, {
+  sourceType: 'module',
+})
+
+const { code } = transformFromAstSync(ast, sourceCode, {
+  plugins: [plugin],
+})
+
+console.log(code)

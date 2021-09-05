@@ -23,7 +23,7 @@ export default declare((api) => {
     const reactiveDataAST = template.ast(`const state = reactive();`)
 
     reactiveDataAST.declarations[0].init.arguments.push(
-      property.body.body[0].argument
+      property.value.body.body[0].argument
     )
 
     return reactiveDataAST
@@ -40,7 +40,7 @@ export default declare((api) => {
 
       if (types.isObjectMethod(item)) {
         computedAST = template.ast(`const ${fnName} = computed(() => {})`)
-        computedAST.declarations[0].init.arguments[0].body = item.body
+        computedAST.declarations[0].init.arguments[0].body = item.value.body
       } else if (types.isObjectProperty(item)) {
         computedAST = template.ast(`const ${fnName} = computed()`)
         computedAST.declarations[0].init.arguments.push(item.value)
@@ -67,10 +67,10 @@ export default declare((api) => {
         const params = item.value.properties
 
         const methodObject = params.filter((param) =>
-          types.isObjectMethod(param)
+          types.isFunctionExpression(param.value)
         )
-        watcherAST.expression.arguments[1].params = methodObject[0].params
-        watcherAST.expression.arguments[1].body = methodObject[0].body
+        watcherAST.expression.arguments[1].params = methodObject[0].value.params
+        watcherAST.expression.arguments[1].body = methodObject[0].value.body
 
         const isDeep = params.filter((param) => param.key.name === 'deep')
         if (isDeep?.length) {
@@ -79,8 +79,8 @@ export default declare((api) => {
       } else {
         // 判断watcher是个函数
 
-        watcherAST.expression.arguments[1].params = item.params
-        watcherAST.expression.arguments[1].body = item.body
+        watcherAST.expression.arguments[1].params = item.value.params
+        watcherAST.expression.arguments[1].body = item.value.body
       }
 
       watcherArr.push(watcherAST)
@@ -117,7 +117,7 @@ export default declare((api) => {
     unmountAST = template.ast(
       `on${fnName.replace(/^[a-z]/, (match) => match.toUpperCase())}(() => {})`
     )
-    unmountAST.expression.arguments[0].body = property.body
+    unmountAST.expression.arguments[0].body = property.value.body
 
     return unmountAST
   }
