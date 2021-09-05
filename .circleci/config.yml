@@ -10,28 +10,56 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: npm i
+      - run: npm install
+      - save_cache:
+          key: source-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - persist_to_workspace:
+          root: ~/repository
+          paths:
+            - .
+      # - checkout
+      # - run: npm install
+
+      # - save_cache:
+      #   key: v1-myapp-cache
+      #   paths:
+      #     - node_modules/
+
+      # - restore_cache:
+      #   key: v1-myapp-cache
 
   test-cov:
     <<: *defaults
+    environment:
+      CODECOV_TOKEN: 1045190d-0b50-4375-9550-a062ea570e05
     steps:
+      - attach_workspace:
+          at: ~/repository
       - run: npm run test:cover
 
   build:
     <<: *defaults
     steps:
-    - run: npm run build
+      - attach_workspace:
+          at: ~/repository
+      - run: npm run build
+      - persist_to_workspace:
+          root: ~/repository
+          paths:
+            - dist
 
 workflows:
   version: 2
   install-test-and-build:
     jobs:
       - install
-      - test-cov:
-          requires:
-            - install
       - build:
           requires:
             - install
-            - test-cov
+      - test-cov:
+          requires:
+            - build
+     
 
