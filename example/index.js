@@ -1,5 +1,5 @@
-const { transformSync } = require('@babel/core')
-const plugin = require('../dist/index.js')
+import { transformSync } from '@babel/core'
+import plugin from '@babel/plugin-transform-options-to-composition'
 
 const code2 = transformSync(
   `

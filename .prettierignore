@@ -1,1 +1,6 @@
 dist
+.husky
+.circleci
+coverage
+.prettierignore
+.gitignore

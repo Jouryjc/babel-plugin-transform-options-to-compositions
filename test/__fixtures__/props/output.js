@@ -1,7 +1,7 @@
 const props = defineProps({
-	foo: {
-		type: String,
-		default: 'foo',
-	},
-	bar: Number,
+  foo: {
+    type: String,
+    default: 'foo',
+  },
+  bar: Number,
 })
