@@ -1,4 +1,4 @@
-import { parseSync, transformFromAstSync } from '@babel/core'
+import { transformSync } from '@babel/core'
 import plugin from '../dist/esm/index.js'
 
 const sourceCode = `
@@ -56,11 +56,15 @@ export default {
   
 }`
 
-const ast = parseSync(sourceCode, {
-  sourceType: 'module',
-})
-
-const { code } = transformFromAstSync(ast, sourceCode, {
+const { code } = transformSync(sourceCode, {
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        modules: false,
+      },
+    ],
+  ],
   plugins: [plugin],
 })
 

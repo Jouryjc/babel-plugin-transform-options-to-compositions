@@ -16,6 +16,14 @@ describe('props -> defineProps', () => {
       }
     `,
       {
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              modules: false,
+            },
+          ],
+        ],
         plugins: [plugin],
       }
     )

@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`lifecycle lifecycle: beforeUnmount 1`] = `
-"\\"use strict\\";
-
+"import { onBeforeUnmount } from 'vue';
 onBeforeUnmount(() => {
   console.log('before unmount!');
 });"

@@ -3,12 +3,12 @@ import { declare } from '@babel/helper-plugin-utils'
 export default declare((api) => {
   api.assertVersion(7)
   const { types, template } = api
-  const bodyContent = []
 
-  const propertyMap = {
-    props: {},
-    state: {},
-  }
+  const bodyContent = []
+  const importIdentifierMap = {}
+
+  // 用于缓存当前属性是挂在哪个父级之上（props、data、computed、watch、methods）
+  const thisExpressionMap = {}
 
   function genDefineProps(property) {
     return types.variableDeclaration('const', [
@@ -122,6 +122,37 @@ export default declare((api) => {
     return unmountAST
   }
 
+  function hasImportIndentifier(item) {
+    return ['props', 'data', 'computed', 'watch', 'beforeUnmount'].includes(
+      item
+    )
+  }
+
+  function genImportDeclaration(map) {
+    const importSpecifiers = []
+    const importMap = {
+      props: 'defineProps',
+      data: 'reactive',
+      computed: 'computed',
+      watch: 'watch',
+      beforeUnmount: 'onBeforeUnmount',
+    }
+
+    Object.keys(map).forEach((item) => {
+      const importIdentifier = hasImportIndentifier(item) ? importMap[item] : ''
+
+      if (importIdentifier) {
+        importSpecifiers.push(importIdentifier)
+      }
+    })
+    return template.ast(`import {${importSpecifiers.join(',')}} from 'vue'`)
+
+    // return types.importDeclaration(
+    //   importSpecifiers,
+    //   types.StringLiteral('vue')
+    // )
+  }
+
   return {
     name: 'transform-options-to-composition',
 
@@ -154,14 +185,20 @@ export default declare((api) => {
           }
 
           properties.forEach((property) => {
-            let newNode = GEN_MAP?.[property.key.name]?.(property)
+            const keyName = property.key.name
+            let newNode = GEN_MAP?.[keyName]?.(property)
 
             if (newNode) {
+              importIdentifierMap[keyName] = true
+
               Array.isArray(newNode)
                 ? bodyContent.push(...newNode)
                 : bodyContent.push(newNode)
             }
           })
+
+          // 根据引入了哪些函数，去生成 import 声明语句
+          bodyContent.unshift(genImportDeclaration(importIdentifierMap))
 
           path.node.body = bodyContent
         },

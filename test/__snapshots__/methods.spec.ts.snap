@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`methods methods: methods 1`] = `
-"\\"use strict\\";
+"import 'vue';
 
 const sayHello = aa => {
   console.log('say Hi');

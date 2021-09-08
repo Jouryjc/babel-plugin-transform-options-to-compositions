@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`data -> reactive data -> reactive: data 1`] = `
-"\\"use strict\\";
-
+"import { reactive } from 'vue';
 const state = reactive({
   lastName: 'Tom'
 });"

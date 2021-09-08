@@ -15,6 +15,14 @@ describe('methods', () => {
       }
     `,
       {
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              modules: false,
+            },
+          ],
+        ],
         plugins: [plugin],
       }
     )

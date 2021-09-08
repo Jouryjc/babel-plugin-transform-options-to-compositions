@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`computed -> computed computed: computed 1`] = `
-"\\"use strict\\";
-
+"import { computed } from 'vue';
 const name = computed(function name() {
   return this.firstName + this.lastName;
 });

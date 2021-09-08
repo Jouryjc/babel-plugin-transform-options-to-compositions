@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`watch -> watch watch: watch 1`] = `
-"\\"use strict\\";
-
+"import { watch } from 'vue';
 watch('name', (cur, prev) => {
   console.log(cur, prev);
 }, {

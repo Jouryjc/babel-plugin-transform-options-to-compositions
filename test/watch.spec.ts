@@ -17,6 +17,14 @@ describe('watch -> watch', () => {
       }
     `,
       {
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              modules: false,
+            },
+          ],
+        ],
         plugins: [plugin],
       }
     )
