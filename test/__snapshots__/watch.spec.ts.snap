@@ -5,6 +5,6 @@ exports[`watch -> watch watch: watch 1`] = `
 watch('name', (cur, prev) => {
   console.log(cur, prev);
 }, {
-  deep: true;
+  deep: true
 });"
 `;

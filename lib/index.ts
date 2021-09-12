@@ -22,11 +22,16 @@ export default declare((api) => {
   function genReactiveData(property) {
     const reactiveDataAST = template.ast(`const state = reactive();`)
 
+    const returnStatement = property.value.body.body.filter((node) =>
+      types.isReturnStatement(node)
+    )
     reactiveDataAST.declarations[0].init.arguments.push(
-      property.value.body.body[0].argument
+      returnStatement[0].argument
     )
 
     return reactiveDataAST
+
+    // TODO data 中 return 之前的逻辑未处理
   }
 
   function genComputed(property) {
@@ -74,7 +79,14 @@ export default declare((api) => {
 
         const isDeep = params.filter((param) => param.key.name === 'deep')
         if (isDeep?.length) {
-          watcherAST.expression.arguments.push(template.ast(`{deep: true}`))
+          watcherAST.expression.arguments.push(
+            types.objectExpression([
+              types.objectProperty(
+                types.identifier('deep'),
+                types.booleanLiteral(true)
+              ),
+            ])
+          )
         }
       } else {
         // 判断watcher是个函数
@@ -146,29 +158,44 @@ export default declare((api) => {
       }
     })
     return template.ast(`import {${importSpecifiers.join(',')}} from 'vue'`)
-
-    // return types.importDeclaration(
-    //   importSpecifiers,
-    //   types.StringLiteral('vue')
-    // )
   }
 
   return {
     name: 'transform-options-to-composition',
 
     visitor: {
-      // ObjectProperty (path) {
-      //     console.log(path)
-      // },
-      // ThisExpression: {
-      //     enter (path) {
-      //         const computed = path.findParent(path => {
-      //             return path.isObjectProperty() && path.node?.key?.name === 'computed'
-      //         })
-      //     }
-      // },
+      ObjectProperty: {
+        enter(path) {
+          const keyName = path.node.key.name
+          if (['props', 'computed', 'methods'].includes(keyName)) {
+            path.node.value.properties.map((property) => {
+              thisExpressionMap[property.key.name] = keyName
+            })
+          }
+
+          if (keyName === 'data') {
+            const returnStatement = path.node.value.body.body.filter((node) =>
+              types.isReturnStatement(node)
+            )
+            returnStatement[0].argument.properties.map((property) => {
+              thisExpressionMap[property.key.name] = 'state'
+            })
+          }
+        },
+      },
       Program: {
         exit(path) {
+          path.traverse({
+            ThisExpression(p) {
+              const propertyName = p.parent.property.name
+              if (thisExpressionMap[propertyName]) {
+                p.parent.object = types.identifier(
+                  thisExpressionMap[propertyName]
+                )
+              }
+            },
+          })
+
           const exportDefaultDeclaration = path.node.body.filter((item) =>
             types.isExportDefaultDeclaration(item)
           )

@@ -17,6 +17,7 @@ export default {
   },
 
   data () {
+    const a = 1;
     return {
       lastName: 'Tom'
     }

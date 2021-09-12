@@ -5,39 +5,7 @@
 
 > 一个从 options api 到 composition api 的插件
 
-### 🧱 安装
-
-```js
-// using npm
-npm install @babel/plugin-transform-options-to-composition -D
-
-// using yarn
-yarn add @babel/plugin-transform-options-to-composition -D
-```
-
-### 🌟 使用
-
-#### 📖 配置文件
-
-```json
-{
-  "plugins": ["@babel/plugin-transform-options-to-composition"]
-}
-```
-
-#### 🎞️ CLI
-
-```js
-babel --plugins @babel/plugin-transform-options-to-composition index.js
-```
-
-### 📄 TODOS
-
-1. 处理代码中使用到的 this
-2. 补充单元测试
-3. provide&project
-4. 生命周期函数
-
 ### 🔗 参考文档
 
 [Composition API](https://v3.vuejs.org/api/composition-api.html#composition-api)
+[Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
